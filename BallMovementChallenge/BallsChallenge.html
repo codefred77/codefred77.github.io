@@ -1,0 +1,118 @@
+<div id="ball1" style="
+  z-index:5;
+  position:absolute;
+  left:0px;
+  top:0px;
+  width:50px;
+  height:50px;
+  border-radius:50%;
+  background:green"></div>
+
+<div id="ball2" style="
+  z-index:1;
+  position:absolute;
+  left:0px;
+  top:0px;
+  width:75px;
+  height:75px;
+  border-radius:50%;
+  background:orange"></div>
+
+<script>
+
+//Set global variable that would contain the position, velocity and the html element "ball"
+var positionX1 = 0;
+var positionY1 = 0;
+var positionX2 = 0;
+var positionY2 = 0;
+var Xmin = 0;
+var Xmax = 300;
+var Ymin = 0;
+var Ymax = 300;
+var reverse1 = false;
+var reverse2 = false;
+var ball1 = document.getElementById("ball1");
+
+// Function to calculate new ball position
+// ---------------------------------------
+function newPosition (currentPosition, minVal, maxVal, velocity, inReverse) {
+   if (inReverse) {
+      if (currentPosition > velocity) {
+        return currentPosition - velocity;
+      } else {
+        return minVal;
+      }
+   } else {
+     if ((currentPosition + velocity) < maxVal) {
+        return currentPosition + velocity;
+      } else {
+        return maxVal;
+      }
+
+   }
+}
+
+// Function to change the position of the html element "ball1"
+// -----------------------------------------------------------
+function moveBall1() {
+
+let velX1 = (Math.floor(Math.random() * 10) + 1) * 10; // Range 10-100
+let velY1 = (Math.floor(Math.random() * 10) + 1) * 10; // Range 10-100
+
+if (reverse1) {
+  positionX1 = newPosition (positionX1, Xmin, Xmax, velX1, reverse1);
+  positionY1 = newPosition (positionY1, Xmin, Xmax, velY1, reverse1);
+  ball1.style.left = positionX1 + "px";
+  ball1.style.top = positionY1 + "px";
+} else {
+  positionX1 = newPosition (positionX1, Xmin, Xmax, velX1, reverse1);
+  positionY1 = newPosition (positionY1, Xmin, Xmax, velY1, reverse1);
+  ball1.style.left = positionX1 + "px";
+  ball1.style.top = positionY1 + "px";
+}
+
+if (
+  positionX1 >= Xmax ||
+  positionX1 === Xmin ||
+  positionY1 >= Ymax ||
+  positionY1 === Ymin
+) {
+  reverse1 = !reverse1;
+}
+
+}
+
+// Function to change the position of the html element "ball2"
+// -----------------------------------------------------------
+function moveBall2() {
+
+let velX2 = (Math.floor(Math.random() * 10) + 1) * 10; // Range 10-100
+let velY2 = (Math.floor(Math.random() * 10) + 1) * 10; // Range 10-100
+
+if (reverse2) {
+  positionX2 = newPosition (positionX2, Xmin, Xmax, velX2, reverse2);
+  positionY2 = newPosition (positionY2, Xmin, Xmax, velY2, reverse2);
+  ball2.style.left = positionX2 + "px";
+  ball2.style.top = positionY2 + "px";
+} else {
+  positionX2 = newPosition (positionX2, Xmin, Xmax, velX2, reverse2);
+  positionY2 = newPosition (positionY2, Xmin, Xmax, velY2, reverse2);
+  ball2.style.left = positionX2 + "px";
+  ball2.style.top = positionY2 + "px";
+}
+
+if (
+  positionX2 >= Xmax ||
+  positionX2 === Xmin ||
+  positionY2 >= Ymax ||
+  positionY2 === Ymin
+) {
+  reverse2 = !reverse2;
+}
+
+}
+
+setInterval(moveBall1, 100);
+setInterval(moveBall2, 100);
+
+</script>
